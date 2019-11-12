@@ -1149,6 +1149,19 @@ class TicketApi(RateableApi, TaggableApi, IncrementalApi, CRUDApi):
 
         return self._put(self._build_url(self.endpoint.comments.redact(ticket, comment)), {'text': text})
 
+    @extract_id(Ticket, TicketComment)
+    def comment_redact(self, ticket, comment, text):
+        """
+        Redact text from ticket comment. `See Zendesk API docs <https://developer.zendesk.com/rest_api/docs/support/ticket_comments#redact-string-in-comment>`_
+
+        :param ticket: Ticket object or id
+        :param comment: Comment object or id
+        :param text: Text to be redacted from comment
+        :return Comment: Ticket Comment object
+        """
+
+        return self._put(self._build_url(self.endpoint.comments.redact(ticket, comment)), {'text': text})
+
     def permanently_delete(self, tickets):
         """
         Permanently delete ticket. `See Zendesk API docs <https://developer.zendesk.com/rest_api/docs/support/tickets#delete-ticket-permanently>`_
